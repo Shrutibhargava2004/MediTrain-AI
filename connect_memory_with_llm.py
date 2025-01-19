@@ -27,12 +27,12 @@ def load_llm(huggingface_repo_id):
 CUSTOM_PROMPT_TEMPLATE = """
 Use the pieces of information provided in the context to answer user's question.
 If you dont know the answer, just say that you dont know, dont try to make up an answer. 
-Dont provide anything out of the given context
+Don't provide anything out of the given context.Respond with empathy, gratitude, and encouragement to make the conversation warm and helpful.
 
 Context: {context}
 Question: {question}
 
-
+Start the answer with a supportive tone. Offer actionable advice and encouragement. 
 """
 
 def set_custom_prompt(custom_prompt_template):
