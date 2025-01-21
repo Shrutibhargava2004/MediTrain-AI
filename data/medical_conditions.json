@@ -1,0 +1,109 @@
+{
+    "conditions": [
+        {
+            "name": "Common Cold",
+            "symptoms": ["headache", "fever", "runny nose", "sore throat", "cough", "congestion", "sneezing", "fatigue"],
+            "severity": "low",
+            "suggestion": "Rest, stay hydrated, and take over-the-counter medications. Common tablets: Acetaminophen (500mg) for fever/pain, Antihistamines like Cetirizine (10mg) for runny nose, Dextromethorphan (15-30mg) for cough. Use saline nasal drops and throat lozenges for symptom relief.",
+            "duration": "7-10 days"
+        },
+        {
+            "name": "Influenza (Flu)",
+            "symptoms": ["high fever", "severe body aches", "fatigue", "dry cough", "chills", "headache", "nasal congestion", "weakness"],
+            "severity": "medium",
+            "suggestion": "Rest, stay hydrated. Common tablets: Oseltamivir (Tamiflu 75mg twice daily) if prescribed within 48 hours, Ibuprofen (400mg) or Acetaminophen (650mg) for fever and body aches. Monitor temperature and seek medical attention if symptoms worsen.",
+            "duration": "1-2 weeks"
+        },
+        {
+            "name": "COVID-19",
+            "symptoms": ["fever", "dry cough", "fatigue", "loss of taste or smell", "difficulty breathing", "body aches", "sore throat", "headache"],
+            "severity": "high",
+            "suggestion": "Isolate immediately, contact healthcare provider. Common tablets: Paracetamol (500-1000mg) for fever/pain, prescribed antivirals like Paxlovid if eligible. Monitor oxygen levels, and seek emergency care if experiencing severe symptoms.",
+            "duration": "10-14 days"
+        },
+        {
+            "name": "Migraine",
+            "symptoms": ["severe headache", "nausea", "light sensitivity", "sound sensitivity", "visual aura", "dizziness", "vomiting"],
+            "severity": "medium",
+            "suggestion": "Rest in a dark, quiet room. Common tablets: Sumatriptan (50-100mg) at onset, Naproxen (500mg) for pain, Anti-nausea tablets like Ondansetron (4-8mg) if needed. Identify and avoid triggers.",
+            "duration": "4-72 hours"
+        },
+        {
+            "name": "Gastroenteritis",
+            "symptoms": ["nausea", "vomiting", "diarrhea", "stomach cramps", "fever", "weakness", "dehydration"],
+            "severity": "medium",
+            "suggestion": "Stay hydrated with clear fluids, follow BRAT diet. Common tablets: Loperamide (2mg) for diarrhea, Ondansetron (4mg) for nausea, ORS tablets for rehydration. Avoid dairy and fatty foods. Seek medical attention if severe dehydration occurs.",
+            "duration": "1-3 days"
+        },
+        {
+            "name": "Bronchitis",
+            "symptoms": ["persistent cough", "chest congestion", "wheezing", "fatigue", "mild fever", "chest discomfort", "mucus production"],
+            "severity": "medium",
+            "suggestion": "Rest, use humidifier. Common tablets: Guaifenesin (400mg) for mucus, Dextromethorphan (15-30mg) for cough, Acetaminophen (500mg) for fever. Avoid smoking and irritants. Stay hydrated.",
+            "duration": "10-14 days"
+        },
+        {
+            "name": "Hypertension",
+            "symptoms": ["headache", "dizziness", "shortness of breath", "chest pain", "vision problems", "fatigue", "irregular heartbeat"],
+            "severity": "high",
+            "suggestion": "Monitor blood pressure regularly, take prescribed medications. Common tablets: Diuretics like Hydrochlorothiazide (25mg), Beta blockers like Metoprolol (50mg), ACE inhibitors like Lisinopril (5mg). Reduce salt intake, exercise regularly, manage stress.",
+            "duration": "chronic"
+        },
+        {
+            "name": "Type 2 Diabetes",
+            "symptoms": ["increased thirst", "frequent urination", "fatigue", "blurred vision", "slow wound healing", "unexplained weight loss", "increased hunger"],
+            "severity": "high",
+            "suggestion": "Monitor blood sugar regularly, take prescribed medications. Common tablets: Metformin (500mg) for blood sugar control, Sulfonylureas like Glipizide (5mg) for insulin release. Follow diabetic diet, exercise regularly, check feet daily.",
+            "duration": "chronic"
+        },
+        {
+            "name": "Asthma",
+            "symptoms": ["wheezing", "shortness of breath", "chest tightness", "coughing", "difficulty breathing", "rapid breathing"],
+            "severity": "high",
+            "suggestion": "Use prescribed inhalers. Common tablets: Corticosteroids like Prednisone (5mg) for inflammation, Bronchodilators like Albuterol (2mg) for airway opening. Avoid triggers, follow asthma action plan, seek emergency care for severe attacks.",
+            "duration": "chronic"
+        },
+        {
+            "name": "Allergic Rhinitis",
+            "symptoms": ["sneezing", "runny nose", "nasal congestion", "itchy eyes", "watery eyes", "itchy nose", "postnasal drip"],
+            "severity": "low",
+            "suggestion": "Avoid allergens, use antihistamines. Common tablets: Loratadine (10mg) for allergy relief, Nasal sprays like Oxymetazoline (0.05%) for congestion. Keep windows closed during high pollen counts.",
+            "duration": "varies"
+        },
+        {
+            "name": "Acid Reflux (GERD)",
+            "symptoms": ["heartburn", "chest pain", "difficulty swallowing", "regurgitation", "sour taste", "chronic cough", "throat irritation"],
+            "severity": "medium",
+            "suggestion": "Avoid trigger foods, eat smaller meals, don't lie down after eating. Common tablets: Antacids like Tums (500mg) for quick relief, Histamine-2 (H2) blockers like Ranitidine (150mg) for acid reduction, Proton pump inhibitors like Omeprazole (20mg) for long-term relief. Elevate head while sleeping.",
+            "duration": "chronic"
+        },
+        {
+            "name": "Urinary Tract Infection",
+            "symptoms": ["frequent urination", "burning sensation", "cloudy urine", "strong odor", "pelvic pain", "blood in urine", "lower back pain"],
+            "severity": "medium",
+            "suggestion": "Common tablets: Nitrofurantoin (100mg) or Trimethoprim/Sulfamethoxazole as prescribed antibiotics, Phenazopyridine (200mg) for urinary pain relief. Drink plenty of water, urinate frequently.",
+            "duration": "3-7 days"
+        },
+        {
+            "name": "Osteoarthritis",
+            "symptoms": ["joint pain", "stiffness", "reduced flexibility", "swelling", "bone spurs", "grating sensation", "weakness"],
+            "severity": "medium",
+            "suggestion": "Exercise regularly, maintain healthy weight. Common tablets: Acetaminophen (500mg) for pain relief, NSAIDs like Ibuprofen (400mg) for inflammation, Glucosamine and Chondroitin supplements for joint health. Use assistive devices, apply heat/cold therapy.",
+            "duration": "chronic"
+        },
+        {
+            "name": "Depression",
+            "symptoms": ["persistent sadness", "loss of interest", "sleep changes", "fatigue", "difficulty concentrating", "worthlessness", "suicidal thoughts"],
+            "severity": "high",
+            "suggestion": "Seek professional help, take prescribed medications. Common tablets: Selective serotonin reuptake inhibitors (SSRIs) like Fluoxetine (20mg), Serotonin-norepinephrine reuptake inhibitors (SNRIs) like Venlafaxine (37.5mg). Engage in therapy, maintain social connections, exercise regularly.",
+            "duration": "varies"
+        },
+        {
+            "name": "Anxiety Disorder",
+            "symptoms": ["excessive worry", "restlessness", "difficulty sleeping", "panic attacks", "rapid heartbeat", "sweating", "trembling"],
+            "severity": "high",
+            "suggestion": "Practice relaxation techniques, seek therapy. Common tablets: Benzodiazepines like Alprazolam (0.25mg) for short-term relief, SSRIs like Sertraline (25mg) for long-term relief. Maintain regular exercise and sleep schedule.",
+            "duration": "varies"
+        }
+    ]
+}

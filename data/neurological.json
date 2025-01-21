@@ -1,0 +1,26 @@
+{
+    "category": "Neurological Conditions",
+    "conditions": [
+        {
+            "name": "Migraine",
+            "symptoms": ["severe headache", "nausea", "light sensitivity", "sound sensitivity", "visual aura", "dizziness", "vomiting"],
+            "severity": "medium",
+            "suggestion": "Rest in dark room. Common tablets: Sumatriptan (50-100mg) or Rizatriptan (10mg) for acute relief, Propranolol (40mg) for prevention, Ondansetron (4mg) for nausea. Identify and avoid triggers.",
+            "duration": "4-72 hours"
+        },
+        {
+            "name": "Epilepsy",
+            "symptoms": ["seizures", "temporary confusion", "staring spells", "uncontrollable jerking", "loss of consciousness", "fear", "anxiety"],
+            "severity": "high",
+            "suggestion": "Common tablets: Levetiracetam (500-1000mg), Carbamazepine (200mg), or Valproic acid (500mg) as anticonvulsants. Take medications regularly, avoid triggers, maintain regular sleep schedule, wear medical ID.",
+            "duration": "chronic"
+        },
+        {
+            "name": "Multiple Sclerosis",
+            "symptoms": ["fatigue", "numbness", "weakness", "vision problems", "balance problems", "cognitive changes", "depression"],
+            "severity": "high",
+            "suggestion": "Common tablets: Fingolimod (0.5mg daily), Dimethyl fumarate (240mg twice daily), Teriflunomide (14mg daily) for disease modification. Baclofen (10mg) for muscle spasticity. Physical therapy, occupational therapy, stress management essential.",
+            "duration": "chronic"
+        }
+    ]
+}

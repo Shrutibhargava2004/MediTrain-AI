@@ -59,6 +59,8 @@
             display: inline-block;
             line-height: 1.5;
             position: relative;
+            word-wrap: break-word;
+            white-space: pre-wrap;
         }
 
         .user-message .bubble {
@@ -123,6 +125,11 @@
         button:hover {
             background-color: #0056b3;
         }
+
+        /* Style for handling bold sections */
+        b {
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -145,7 +152,7 @@
 
         const bubble = document.createElement('div');
         bubble.classList.add('bubble');
-        bubble.textContent = message;
+        bubble.innerHTML = message; // Use innerHTML to preserve formatting
 
         // Timestamp inside the bubble
         const timestamp = document.createElement('span');

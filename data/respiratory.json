@@ -1,0 +1,26 @@
+{
+    "category": "Respiratory Conditions",
+    "conditions": [
+        {
+            "name": "Asthma",
+            "symptoms": ["wheezing", "shortness of breath", "chest tightness", "coughing", "difficulty breathing", "rapid breathing", "anxiety"],
+            "severity": "high",
+            "suggestion": "Use prescribed inhalers. Common tablets: Montelukast (10mg) daily for prevention, Prednisone (5-60mg) for severe attacks. Quick-relief inhalers: Albuterol. Avoid triggers, follow asthma action plan, seek emergency care for severe attacks.",
+            "duration": "chronic"
+        },
+        {
+            "name": "Chronic Bronchitis",
+            "symptoms": ["persistent cough", "mucus production", "wheezing", "chest discomfort", "shortness of breath", "fatigue", "frequent respiratory infections"],
+            "severity": "medium",
+            "suggestion": "Common tablets: Theophylline (100-200mg) for bronchodilation, Roflumilast (500mcg) to reduce inflammation, Guaifenesin (400mg) for mucus. Quit smoking, use bronchodilator inhalers, pulmonary rehabilitation, avoid irritants.",
+            "duration": "chronic"
+        },
+        {
+            "name": "Pneumonia",
+            "symptoms": ["chest pain", "cough with phlegm", "fever", "chills", "difficulty breathing", "rapid breathing", "fatigue", "confusion"],
+            "severity": "high",
+            "suggestion": "Common tablets: Amoxicillin (500mg) or Azithromycin (500mg) for bacterial pneumonia, Acetaminophen (500mg) for fever/pain, Guaifenesin (600mg) for mucus. Rest, stay hydrated, use humidifier, practice breathing exercises.",
+            "duration": "1-3 weeks"
+        }
+    ]
+}

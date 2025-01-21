@@ -1,0 +1,40 @@
+{
+    "category": "Endocrine Disorders",
+    "conditions": [
+        {
+            "name": "Type 1 Diabetes",
+            "symptoms": ["excessive thirst", "frequent urination", "extreme hunger", "unexplained weight loss", "fatigue", "blurred vision", "mood changes"],
+            "severity": "high",
+            "suggestion": "Insulin therapy, blood sugar monitoring, carb counting, regular exercise, proper diet.",
+            "duration": "chronic"
+        },
+        {
+            "name": "Type 2 Diabetes",
+            "symptoms": ["increased thirst", "frequent urination", "increased hunger", "fatigue", "blurred vision", "slow-healing sores", "numbness"],
+            "severity": "high",
+            "suggestion": "Medication, blood sugar monitoring, diet control, exercise, weight management.",
+            "duration": "chronic"
+        },
+        {
+            "name": "Hypothyroidism",
+            "symptoms": ["fatigue", "weight gain", "cold sensitivity", "dry skin", "depression", "muscle weakness", "joint pain", "constipation"],
+            "severity": "medium",
+            "suggestion": "Thyroid hormone replacement therapy, regular monitoring, healthy lifestyle.",
+            "duration": "chronic"
+        },
+        {
+            "name": "Hyperthyroidism",
+            "symptoms": ["weight loss", "rapid heartbeat", "anxiety", "tremors", "sweating", "heat sensitivity", "frequent bowel movements"],
+            "severity": "high",
+            "suggestion": "Anti-thyroid medications, beta blockers, radioactive iodine therapy if needed.",
+            "duration": "chronic"
+        },
+        {
+            "name": "Addison's Disease",
+            "symptoms": ["fatigue", "muscle weakness", "weight loss", "low blood pressure", "salt craving", "hyperpigmentation", "nausea"],
+            "severity": "high",
+            "suggestion": "Hormone replacement therapy, stress dose steroids during illness, medical ID bracelet.",
+            "duration": "chronic"
+        }
+    ]
+}

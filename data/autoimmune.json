@@ -1,0 +1,40 @@
+{
+    "category": "Autoimmune Conditions",
+    "conditions": [
+        {
+            "name": "Systemic Lupus Erythematosus",
+            "symptoms": ["butterfly rash", "joint pain", "fatigue", "fever", "skin lesions", "chest pain", "hair loss"],
+            "severity": "high",
+            "suggestion": "Critical: Regular monitoring needed. Common tablets: Hydroxychloroquine (200-400mg), Prednisone (5-60mg) for flares, Mycophenolate (1000-3000mg) for severe cases. NSAIDs like Naproxen (500mg) for pain. Essential: Sun protection, lifestyle changes, folic acid supplements.",
+            "duration": "chronic"
+        },
+        {
+            "name": "Celiac Disease",
+            "symptoms": ["digestive problems", "fatigue", "weight loss", "bloating", "anemia", "skin rash", "joint pain"],
+            "severity": "medium",
+            "suggestion": "Important: Strict gluten-free diet essential. Common tablets: Iron supplements (325mg), Vitamin D3 (2000-4000 IU), B12 (1000mcg), Calcium (1000mg), Folic acid (1mg). Regular nutritional monitoring required. Consider probiotic supplements.",
+            "duration": "chronic"
+        },
+        {
+            "name": "Type 1 Diabetes",
+            "symptoms": ["excessive thirst", "frequent urination", "hunger", "fatigue", "blurred vision", "weight loss"],
+            "severity": "high",
+            "suggestion": "Critical: Monitor blood sugar 4-10 times daily. Insulin therapy essential. Common tablets: Metformin (500-2000mg) may be added, Glucagon kit for emergencies. Daily aspirin (81mg) may be recommended. Regular A1C monitoring crucial.",
+            "duration": "chronic"
+        },
+        {
+            "name": "Graves' Disease",
+            "symptoms": ["anxiety", "tremors", "weight loss", "heat sensitivity", "bulging eyes", "rapid heartbeat"],
+            "severity": "high",
+            "suggestion": "Important: Regular thyroid monitoring. Common tablets: Methimazole (5-60mg) or Propylthiouracil (50-300mg), Beta blockers like Propranolol (20-40mg) for symptoms. For anxiety: Buspirone (5-10mg) if needed. Monitor heart rate regularly.",
+            "duration": "chronic"
+        },
+        {
+            "name": "Psoriatic Arthritis",
+            "symptoms": ["joint pain", "swelling", "skin patches", "nail changes", "fatigue", "reduced range of motion"],
+            "severity": "medium",
+            "suggestion": "Important: Early treatment prevents joint damage. Common tablets: Methotrexate (7.5-25mg weekly), Sulfasalazine (500-1000mg), NSAIDs like Celecoxib (200mg). Newer options: Apremilast (30mg twice daily). Physical therapy essential.",
+            "duration": "chronic"
+        }
+    ]
+}

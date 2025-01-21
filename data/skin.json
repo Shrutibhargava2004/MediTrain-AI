@@ -1,0 +1,40 @@
+{
+    "category": "Skin Conditions",
+    "conditions": [
+        {
+            "name": "Psoriasis",
+            "symptoms": ["red patches", "silvery scales", "dry skin", "itching", "burning", "thick nails", "joint pain"],
+            "severity": "medium",
+            "suggestion": "IMPORTANT: Early treatment prevents spreading. Common tablets: Methotrexate (7.5-15mg weekly) - take with folic acid (1mg daily), Acitretin (10-25mg daily) for severe cases, Apremilast (30mg twice daily) for moderate-severe cases. WARNING: Protect skin from injury. Topical treatments, phototherapy, lifestyle changes essential for management.",
+            "duration": "chronic"
+        },
+        {
+            "name": "Eczema (Atopic Dermatitis)",
+            "symptoms": ["itching", "dry skin", "red rashes", "thickened skin", "small bumps", "skin infections", "sleep problems"],
+            "severity": "medium",
+            "suggestion": "CAUTION: Avoid scratching affected areas. Common tablets: Antihistamines - Cetirizine (10mg daily) or Hydroxyzine (25mg at bedtime) for itching, Prednisone (5-60mg) for severe flares. ALERT: Watch for signs of infection. Use prescribed antibiotics if infected. Maintain strict moisturizing routine.",
+            "duration": "chronic"
+        },
+        {
+            "name": "Acne Vulgaris",
+            "symptoms": ["pimples", "blackheads", "whiteheads", "inflammation", "scarring", "oily skin", "redness"],
+            "severity": "medium",
+            "suggestion": "IMPORTANT: Don't pop pimples - increases scarring risk. Common tablets: Isotretinoin (20-40mg daily) for severe cases - REQUIRES MONITORING, Doxycycline (50-100mg daily), Spironolactone (25-100mg daily) for hormonal acne. REMINDER: Sun protection crucial, especially with medications.",
+            "duration": "varies"
+        },
+        {
+            "name": "Rosacea",
+            "symptoms": ["facial redness", "visible blood vessels", "bumps", "eye problems", "burning sensation", "skin thickening"],
+            "severity": "medium",
+            "suggestion": "TRIGGER ALERT: Identify and avoid personal triggers. Common tablets: Doxycycline (40-100mg daily) - anti-inflammatory dose, Isotretinoin (10-20mg daily) for severe cases. WARNING: Sun exposure can worsen symptoms. Use broad-spectrum sunscreen daily.",
+            "duration": "chronic"
+        },
+        {
+            "name": "Contact Dermatitis",
+            "symptoms": ["red rash", "itching", "burning", "blisters", "dry skin", "swelling", "tenderness"],
+            "severity": "low",
+            "suggestion": "URGENT: Identify and remove contact trigger. Common tablets: Antihistamines - Fexofenadine (180mg daily) or Loratadine (10mg daily), Prednisone (20-40mg) for severe reactions. IMPORTANT: Document suspected triggers to prevent future exposure.",
+            "duration": "1-4 weeks"
+        }
+    ]
+}

@@ -1,0 +1,26 @@
+{
+    "category": "Cardiovascular Conditions",
+    "conditions": [
+        {
+            "name": "Hypertension (Primary)",
+            "symptoms": ["headache", "dizziness", "shortness of breath", "chest pain", "vision problems", "fatigue", "irregular heartbeat", "morning headaches", "nosebleeds"],
+            "severity": "high",
+            "suggestion": "Important: Monitor blood pressure daily. Common tablets: ACE inhibitors like Lisinopril (10-40mg), Beta blockers like Metoprolol (25-100mg), Calcium channel blockers like Amlodipine (2.5-10mg), Diuretics like Hydrochlorothiazide (12.5-25mg). Maintain low salt diet, regular exercise, stress management essential.",
+            "duration": "chronic"
+        },
+        {
+            "name": "Hypertension (Secondary)",
+            "symptoms": ["severe headache", "anxiety", "sweating", "tremors", "irregular heartbeat", "vision problems", "chest pain", "difficulty breathing"],
+            "severity": "high",
+            "suggestion": "Urgent: Identify underlying cause. Common tablets: Beta blockers like Propranolol (20-80mg), ACE inhibitors like Enalapril (5-40mg), Calcium channel blockers like Diltiazem (30-120mg). For anxiety: Alprazolam (0.25-0.5mg) if needed. Regular monitoring crucial.",
+            "duration": "varies"
+        },
+        {
+            "name": "Coronary Artery Disease",
+            "symptoms": ["chest pain", "shortness of breath", "pain in arms/shoulders", "nausea", "cold sweat", "dizziness", "fatigue", "irregular heartbeat"],
+            "severity": "high",
+            "suggestion": "Critical: Keep nitroglycerin handy. Common tablets: Aspirin (81mg daily), Statins like Atorvastatin (10-80mg), Beta blockers like Carvedilol (3.125-25mg), ACE inhibitors like Ramipril (2.5-10mg). Emergency: Take nitroglycerin (0.4mg) for chest pain. Cardiac rehabilitation essential.",
+            "duration": "chronic"
+        }
+    ]
+}
