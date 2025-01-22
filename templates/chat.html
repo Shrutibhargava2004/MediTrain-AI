@@ -55,7 +55,7 @@
             overflow-y: auto;
             flex-grow: 1;
             margin-bottom: 20px;
-            max-height: calc(100vh - 180px); /* Adjust to leave space for header and input */
+            max-height: calc(100vh - 150px); /* Adjust to leave space for header and input */
         }
 
         .chat-message {
@@ -100,13 +100,13 @@
         }
 
         .chat-message span {
-            font-size: 0.8em;
+            font-size: 0.5rem;
             color: #888;
             margin-left: 8px;
         }
 
         .timestamp {
-            font-size: 0.5em; /* Smaller font size */
+            /* font-size: 0.8rem; Smaller font size */
             color: #888;
             position: absolute;
             bottom: 5px;
@@ -181,10 +181,10 @@
         <!-- Chat history will be inserted here -->
     </div>
 
-    <div class="input-container">
+    <footer class="input-container">
         <input type="text" id="user-input" placeholder="Ask a question..." />
         <button onclick="sendMessage()">Send</button>
-    </div>
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
