@@ -61,8 +61,12 @@ qa_chain = RetrievalQA.from_chain_type(
 )
 
 @app.route('/')
-def index():
-    return render_template('index.html')
+def home():
+    return render_template('home.html')
+
+@app.route('/chat')
+def chat():
+    return render_template('chat.html')
 
 @app.route('/query', methods=['POST'])
 def query():
