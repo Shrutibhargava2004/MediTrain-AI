@@ -44,17 +44,35 @@
             text-align: center;
         }
 
+        /* Flex container for left and right sections */
+        .main-container {
+            display: flex;
+            width: 96%;
+            max-width: 190%;
+            flex-grow: 1;
+            margin-top: 0px; /* Space below navbar */
+        }
+
+        .history-section {
+            width: 30%; /* Left section for conversation history */
+            background-color: #d6d2d2;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-right: 20px;
+            max-height: calc(100vh - 100px); /* Adjust height according to available space */
+            overflow-y: auto;
+        }
+
         .chat-box {
-            width: 90%;
-            max-width: 65%;
+            width: 60%; /* Right section for chat */
             background-color: hsla(30, 23%, 95%, 0.963); /* Updated background color */
             border-radius: 10px;
             padding: 20px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             overflow-y: auto;
             flex-grow: 1;
-            margin-bottom: 20px;
-            max-height: calc(100vh - 150px); /* Adjust to leave space for header and input */
+            max-height: calc(100vh - 100px); /* Adjust height according to available space */
         }
 
         .chat-message {
@@ -105,7 +123,6 @@
         }
 
         .timestamp {
-            /* font-size: 0.8rem; Smaller font size */
             color: #888;
             position: absolute;
             bottom: 5px;
@@ -119,14 +136,14 @@
         }
 
         .input-container {
-            width: 90%;
-            max-width: 600px;
+            width: 100%;
             display: flex;
             margin-top: 5px;
         }
 
         input[type="text"] {
-            flex: 1;
+            flex: 0.8;
+            margin-left: 40%;
             padding: 10px;
             border-radius: 5px 0 0 5px;
             border: 1px solid #ddd;
@@ -169,21 +186,33 @@
                     <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="/chat">Chat</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">Diagnose</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Terms</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Login</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/terms">Terms</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
                 </ul>
             </div>
         </div>
     </nav>
     
-    <div class="chat-box" id="chat-box">
-        <!-- Chat history will be inserted here -->
-    </div>
+    <div class="main-container">
+        <!-- Left Section for Conversation History -->
+        <div class="history-section">
+            <h2>Conversation History</h2>
+            <div id="history-content">
+                <!-- History content will go here -->
+            </div>
+        </div>
 
+        <!-- Right Section for Chat -->
+        <div class="chat-box" id="chat-box">
+            <!-- Chat history will be inserted here -->
+        </div>
+        
+    </div>
     <footer class="input-container">
         <input type="text" id="user-input" placeholder="Ask a question..." />
         <button onclick="sendMessage()">Send</button>
     </footer>
+   
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>

@@ -71,6 +71,20 @@ def home():
 def chat():
     return render_template('chat.html')
 
+@app.route('/login')
+def login():
+    return render_template('login.html')
+
+# Define the route for the register page
+@app.route('/register')
+def register():
+    return render_template('register.html')
+
+@app.route('/terms')
+def terms():
+    return render_template('terms.html')
+
+
 import re
 from bs4 import BeautifulSoup
 from flask import request, jsonify, session
