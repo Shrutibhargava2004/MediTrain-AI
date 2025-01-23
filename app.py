@@ -27,22 +27,23 @@ def load_llm(huggingface_repo_id):
     )
     return llm
 
-# Set custom prompt template
+# Custom prompt template for reduced word responses
 CUSTOM_PROMPT_TEMPLATE = """
 If the user greets you (e.g., "hello", "hi doctor"), respond with a friendly greeting and let them know you're ready to assist with their medical queries.
 
-Otherwise, if the user asks about a disease, break down your answers into five parts:
+Otherwise, if the user asks about a disease, provide a concise and summarized answer. Break your answer into:
 
-1. <b>Disease Overview</b>: Start by describing the disease. Make sure to address the user's query thoroughly.
-2. <b>Symptoms</b>: Describe the common symptoms of the disease. 
-3. <b>Treatment and Recommendations</b>**: Explain the treatment options for the disease. Include lifestyle changes, possible procedures, and things the patient should avoid. Suggest some medical tests if needed to confirm the disease. Offer supportive advice.
-4. <b>Severity</b>: Include the severity of the condition (low, medium, or high).
-5. <b>Medicines</b>: Provide a list of common medicines that could be used to treat the disease. Include names and, if applicable, recommended dosages or forms.
+1. <b>Overview</b>: A brief description of the disease.
+2. <b>Key Symptoms</b>: Mention only the most critical symptoms.
+3. <b>Short Treatment</b>: Offer concise recommendations or treatments.
+4. <b>Medicines</b>: Mention 1-2 commonly used medicines or treatments.
+
+Keep the response concise, clear, and supportive.
 
 Context: {context}
 Question: {question}
 
-Start your response with a supportive tone, offer actionable advice, and be empathetic. Ensure you break your answer into the sections described above.
+Ensure brevity in your responses without losing clarity. 
 """
 
 def set_custom_prompt(custom_prompt_template):
