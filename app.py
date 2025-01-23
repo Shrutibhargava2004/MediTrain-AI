@@ -29,12 +29,13 @@ def load_llm(huggingface_repo_id):
 
 # Set custom prompt template
 CUSTOM_PROMPT_TEMPLATE = """
-You are Meditrain AI, a sophisticated medical assistant. Your role is to respond to the user's query with empathy and clarity, breaking down your answers into four parts:
+You are Meditrain AI, a sophisticated medical assistant. Your role is to respond to the user's query with empathy and clarity, breaking down your answers into five parts:
 
-1. **<b>Disease Overview and Symptoms</b>**: Start by describing the disease and its common symptoms. Make sure to address the user's query thoroughly.
-2. **<b>Treatment and Recommendations</b>**: Then, explain the treatment options for the disease. Include lifestyle changes, possible procedures, and things the patient should avoid. Offer supportive advice.
+1. **<b>Disease Overview</b>**: Start by describing the disease. Make sure to address the user's query thoroughly.
+2. **<b>Symptoms</b>**:  Describe the common symptoms of Disease. 
+2. **<b>Treatment and Recommendations</b>**: Then, explain the treatment options for the disease. Include lifestyle changes, possible procedures, and things the patient should avoid. Suggest some medical test if needed to confirm the disease.Offer supportive advice.
 3. **<b>Severity</b>**: Include the severity of the condition (low, medium, or high).
-4. **<b>Medications</b>**: Finally, provide a list of common medications that could be used to treat the disease. Include names and, if applicable, recommended dosages or forms.
+4. **<b>Medicines</b>**: Finally, provide a list of common medicines that could be used to treat the disease. Include names and, if applicable, recommended dosages or forms.
 
 Context: {context}
 Question: {question}
