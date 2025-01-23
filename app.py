@@ -29,13 +29,15 @@ def load_llm(huggingface_repo_id):
 
 # Set custom prompt template
 CUSTOM_PROMPT_TEMPLATE = """
-You are Meditrain AI, a sophisticated medical assistant. Your role is to respond to the user's query with empathy and clarity, breaking down your answers into five parts:
+If the user greets you (e.g., "hello", "hi doctor"), respond with a friendly greeting and let them know you're ready to assist with their medical queries.
 
-1. **<b>Disease Overview</b>**: Start by describing the disease. Make sure to address the user's query thoroughly.
-2. **<b>Symptoms</b>**:  Describe the common symptoms of Disease. 
-2. **<b>Treatment and Recommendations</b>**: Then, explain the treatment options for the disease. Include lifestyle changes, possible procedures, and things the patient should avoid. Suggest some medical test if needed to confirm the disease.Offer supportive advice.
-3. **<b>Severity</b>**: Include the severity of the condition (low, medium, or high).
-4. **<b>Medicines</b>**: Finally, provide a list of common medicines that could be used to treat the disease. Include names and, if applicable, recommended dosages or forms.
+Otherwise, if the user asks about a disease, break down your answers into five parts:
+
+1. <b>Disease Overview</b>: Start by describing the disease. Make sure to address the user's query thoroughly.
+2. <b>Symptoms</b>: Describe the common symptoms of the disease. 
+3. <b>Treatment and Recommendations</b>**: Explain the treatment options for the disease. Include lifestyle changes, possible procedures, and things the patient should avoid. Suggest some medical tests if needed to confirm the disease. Offer supportive advice.
+4. <b>Severity</b>: Include the severity of the condition (low, medium, or high).
+5. <b>Medicines</b>: Provide a list of common medicines that could be used to treat the disease. Include names and, if applicable, recommended dosages or forms.
 
 Context: {context}
 Question: {question}
@@ -57,7 +59,7 @@ qa_chain = RetrievalQA.from_chain_type(
     llm=load_llm(HUGGINGFACE_REPO_ID),
     chain_type="stuff",
     retriever=db.as_retriever(search_kwargs={'k': 3}),
-    return_source_documents=True,
+    return_source_documents=True,  # This will be handled below
     chain_type_kwargs={'prompt': set_custom_prompt(CUSTOM_PROMPT_TEMPLATE)}
 )
 
@@ -69,9 +71,31 @@ def home():
 def chat():
     return render_template('chat.html')
 
+import re
+from bs4 import BeautifulSoup
+from flask import request, jsonify, session
+
+# Function to remove HTML tags from a response
+def remove_html_tags(text):
+    return BeautifulSoup(text, "html.parser").get_text()
+
+# Function to split the response by new lines
+def split_response_by_newline(response_text):
+    # Clean the response to remove HTML tags
+    cleaned_response = remove_html_tags(response_text)
+    
+    # Split the response by new lines
+    lines = cleaned_response.split("\n")
+    
+    # Filter out empty lines and strip unnecessary spaces
+    messages = [line.strip() for line in lines if line.strip()]
+    
+    return messages
+
+
 @app.route('/query', methods=['POST'])
 def query():
-    user_query = request.form['query']
+    user_query = request.form['query'].strip()
 
     # Retrieve the previous chat context from session
     context = session.get('chat_history', "")
@@ -81,14 +105,36 @@ def query():
 
     # Get the response from the QA chain
     response = qa_chain.invoke({'query': user_query, 'context': context})
-    
+
     # Update chat history in session
     session['chat_history'] = context + f"Bot: {response['result']}\n"
-    
-    # Convert source documents to strings
-    source_documents = [str(doc) for doc in response.get("source_documents", [])]
 
-    return jsonify({'result': response["result"], 'sources': source_documents})
+    # Process the response text
+    response_text = response["result"]
+
+    # Print the raw response for debugging
+    print("Raw Response:", response_text)
+
+    # Split the response based on new lines into a list of messages
+    messages = split_response_by_newline(response_text)
+
+    # Print the split messages for debugging
+    print("Messages after splitting:", messages)
+
+    # Check if messages are being created
+    if not messages:
+        print("No messages to return.")
+
+    # Assign pastel colors to each part of the message
+    pastel_colors = [
+        "#FFCCCB", "#D9F9D9", "#FFFACD", "#FFDAB9", "#D1C4E9",
+        "#FFECB3", "#F8BBD0", "#E6EE9C", "#C8E6C9", "#BBDEFB", "#F5E0B7"
+    ]
+    colored_messages = [{"text": msg, "bg_color": pastel_colors[i % len(pastel_colors)]} for i, msg in enumerate(messages)]
+
+    # Return the response in JSON format
+    return jsonify({'messages': colored_messages})
+
 
 if __name__ == '__main__':
     app.run(debug=True)

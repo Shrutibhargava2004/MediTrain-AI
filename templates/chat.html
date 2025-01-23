@@ -16,7 +16,6 @@
             margin: 0;
             overflow: hidden; /* Prevent page scroll */
             padding-top: 5%; /* Adjust this based on your navbar height */
-
         }
         /* Navbar Styling */
         .navbar {
@@ -48,7 +47,7 @@
         .chat-box {
             width: 90%;
             max-width: 65%;
-            background-color: #fff;
+            background-color: hsla(30, 23%, 95%, 0.963); /* Updated background color */
             border-radius: 10px;
             padding: 20px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -86,14 +85,14 @@
         }
 
         .user-message .bubble {
-            background-color: #d9f7be;
+            background-color: #e6d8ff;
             color: #333;
             border-top-right-radius: 0;
             padding-bottom: 20px;
         }
 
         .bot-message .bubble {
-            background-color: #e6f7ff;
+            background-color: #ace5ff;
             color: #333;
             border-top-left-radius: 0;
             padding-bottom: 20px;
@@ -188,13 +187,14 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        function appendMessage(message, sender) {
+        function appendMessage(message, sender, bgColor) {
             const chatBox = document.getElementById('chat-box');
             const messageDiv = document.createElement('div');
             messageDiv.classList.add('chat-message', sender);
 
             const bubble = document.createElement('div');
             bubble.classList.add('bubble');
+            bubble.style.backgroundColor = bgColor;
             bubble.innerHTML = message; // Use innerHTML to preserve formatting
 
             // Timestamp inside the bubble
@@ -228,7 +228,7 @@
             const userInput = document.getElementById('user-input').value;
             if (userInput.trim() === "") return;
 
-            appendMessage(userInput, 'user-message');
+            appendMessage(userInput, 'user-message', '#d9f7be');
             document.getElementById('user-input').value = '';
 
             fetch('/query', {
@@ -236,11 +236,22 @@
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                body: `query=${userInput}`,
+                body: `query=${encodeURIComponent(userInput)}`,
             })
             .then(response => response.json())
             .then(data => {
-                appendMessage(data.result, 'bot-message');
+                console.log(data); // Debug response
+                if (data.messages) {
+                    data.messages.forEach((msg) => {
+                        appendMessage(msg.text, 'bot-message', msg.bg_color); // Pass bg_color dynamically
+                    });
+                } else {
+                    appendMessage("Something went wrong. Please try again.", 'bot-message', '#e6f7ff');
+                }
+            })
+            .catch(error => {
+                console.error("Fetch error:", error);
+                appendMessage("Failed to connect to the server. Please try again later.", 'bot-message', '#e6f7ff');
             });
         }
 
@@ -256,7 +267,7 @@
         // Optionally, initialize with some previous conversation
         window.onload = function() {
             // Fetch initial messages from backend if needed
-            appendMessage("How can I assist you today?", 'bot-message');
+            appendMessage("How can I assist you today?", 'bot-message', '#e6f7ff');
         }
     </script>
 
