@@ -260,6 +260,22 @@
             appendMessage(userInput, 'user-message', '#d9f7be');
             document.getElementById('user-input').value = '';
 
+            // Display "Analyzing..." in the chat box
+            const analyzingMessageId = 'analyzing-message';
+            const chatBox = document.getElementById('chat-box');
+            const analyzingMessageDiv = document.createElement('div');
+            analyzingMessageDiv.classList.add('chat-message', 'bot-message');
+            analyzingMessageDiv.id = analyzingMessageId;
+
+            const analyzingBubble = document.createElement('div');
+            analyzingBubble.classList.add('bubble');
+            analyzingBubble.style.backgroundColor = '#e6f7ff';
+            analyzingBubble.textContent = "Analyzing...";
+
+            analyzingMessageDiv.appendChild(analyzingBubble);
+            chatBox.appendChild(analyzingMessageDiv);
+            chatBox.scrollTop = chatBox.scrollHeight; // Ensure the scroll stays at the bottom
+
             fetch('/query', {
                 method: 'POST',
                 headers: {
@@ -270,6 +286,11 @@
             .then(response => response.json())
             .then(data => {
                 console.log(data); // Debug response
+
+                // Remove the "Analyzing..." message
+                const analyzingMessage = document.getElementById(analyzingMessageId);
+                if (analyzingMessage) analyzingMessage.remove();
+
                 if (data.messages) {
                     data.messages.forEach((msg) => {
                         appendMessage(msg.text, 'bot-message', msg.bg_color); // Pass bg_color dynamically
@@ -280,6 +301,11 @@
             })
             .catch(error => {
                 console.error("Fetch error:", error);
+
+                // Remove the "Analyzing..." message
+                const analyzingMessage = document.getElementById(analyzingMessageId);
+                if (analyzingMessage) analyzingMessage.remove();
+
                 appendMessage("Failed to connect to the server. Please try again later.", 'bot-message', '#e6f7ff');
             });
         }

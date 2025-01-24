@@ -29,7 +29,7 @@ def load_llm(huggingface_repo_id):
 
 # Custom prompt template for reduced word responses
 CUSTOM_PROMPT_TEMPLATE = """
-If the user greets you (e.g., "hello", "hi doctor"), respond with a friendly greeting and let them know you're ready to assist with their medical queries.
+If the user greets you (e.g., "hello", "hi doctor"), respond with a friendly greeting and let them know you're ready to assist with their medical queries. Do start talking about any disease on your own.
 
 Otherwise, if the user asks about a disease, provide a concise and summarized answer. Break your answer into:
 
@@ -126,9 +126,6 @@ def query():
 
     # Process the response text
     response_text = response["result"]
-
-    # Print the raw response for debugging
-    print("Raw Response:", response_text)
 
     # Split the response based on new lines into a list of messages
     messages = split_response_by_newline(response_text)
