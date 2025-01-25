@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnose - Medical Chatbot</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('/static/bg-sec0.jpg') center center;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding-top: 5%;
+        }
+
+        /* Navbar Styling */
+        .navbar {
+            background-color: #1E3D58;
+        }
+
+        .navbar-brand span {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .nav-link {
+            color: #fff !important;
+            font-weight: 500;
+        }
+
+        .nav-link:hover {
+            color: #F9C8D3 !important;
+        }
+
+        .card {
+            background-color: #ffffffb3;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 25px;
+            width: 80%;
+            max-width: 600px;
+        }
+
+        .btn-primary {
+            background-color: #1E3D58;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #F9C8D3;
+            color: #1E3D58;
+        }
+
+        h1 {
+            color: #1E3D58;
+            margin-bottom: 20px;
+        }
+
+        p {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="/static/logo.png" alt="MediTrain AI Logo" width="40" class="me-2">
+                <span>MediTrain AI</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/chat">Chat</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Diagnose</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/terms">Terms</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Form Section -->
+    <div class="container mt-5">
+        <h1 class="text-center">Heart Disease Prediction System</h1>
+        <p class="text-center">Fill in the form below to predict the possibility of heart disease.</p>
+
+        <form action="{{ url_for('heart_predict') }}" method="POST" class="card">
+            <div class="mb-3">
+                <label for="age" class="form-label">Age (in years):</label>
+                <input type="number" name="age" id="age" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Sex:</label><br>
+                <div class="form-check form-check-inline">
+                    <input type="radio" name="sex" value="1" id="male" class="form-check-input" required>
+                    <label for="male" class="form-check-label">Male</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input type="radio" name="sex" value="0" id="female" class="form-check-input" required>
+                    <label for="female" class="form-check-label">Female</label>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="cp" class="form-label">Chest Pain Type:</label>
+                <select name="cp" id="cp" class="form-select" required>
+                    <option value="0">Typical Angina</option>
+                    <option value="1">Atypical Angina</option>
+                    <option value="2">Non-Anginal Pain</option>
+                    <option value="3">Asymptomatic</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="trestbps" class="form-label">Resting Blood Pressure (mm Hg):</label>
+                <input type="number" name="trestbps" id="trestbps" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="chol" class="form-label">Serum Cholesterol (mg/dl):</label>
+                <input type="number" name="chol" id="chol" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Fasting Blood Sugar &gt; 120 mg/dl:</label><br>
+                <div class="form-check form-check-inline">
+                    <input type="radio" name="fbs" value="1" id="true" class="form-check-input" required>
+                    <label for="true" class="form-check-label">True</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input type="radio" name="fbs" value="0" id="false" class="form-check-input" required>
+                    <label for="false" class="form-check-label">False</label>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="restecg" class="form-label">Resting Electrocardiographic Results:</label>
+                <select name="restecg" id="restecg" class="form-select" required>
+                    <option value="0">Normal</option>
+                    <option value="1">ST-T wave abnormality</option>
+                    <option value="2">Left ventricular hypertrophy</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="thalach" class="form-label">Maximum Heart Rate Achieved:</label>
+                <input type="number" name="thalach" id="thalach" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="exang" class="form-label">Exercise Induced Angina:</label><br>
+                <div class="form-check form-check-inline">
+                    <input type="radio" name="exang" value="1" id="yes" class="form-check-input" required>
+                    <label for="yes" class="form-check-label">Yes</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input type="radio" name="exang" value="0" id="no" class="form-check-input" required>
+                    <label for="no" class="form-check-label">No</label>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="oldpeak" class="form-label">ST Depression Induced by Exercise Relative to Rest:</label>
+                <input type="number" step="0.1" name="oldpeak" id="oldpeak" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="slope" class="form-label">Slope of the Peak Exercise ST Segment:</label>
+                <select name="slope" id="slope" class="form-select" required>
+                    <option value="0">Upsloping</option>
+                    <option value="1">Flat</option>
+                    <option value="2">Downsloping</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="ca" class="form-label">Number of Major Vessels (0-3):</label>
+                <input type="number" name="ca" id="ca" class="form-control" min="0" max="3" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="thal" class="form-label">Thalassemia:</label>
+                <select name="thal" id="thal" class="form-select" required>
+                    <option value="0">Normal</option>
+                    <option value="1">Fixed Defect</option>
+                    <option value="2">Reversible Defect</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Submit</button>
+        </form>
+
+        {% if prediction is not none %}
+            <div class="alert alert-info mt-4">
+                <h2 class="text-center">Prediction Result:</h2>
+                <p class="text-center">{{ prediction }}</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.mi

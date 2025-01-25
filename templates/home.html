@@ -162,7 +162,6 @@
 </head>
 <body>
     <!-- Navbar -->
-    <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">
@@ -176,7 +175,7 @@
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
                 <li class="nav-item"><a class="nav-link" href="/chat">Chat</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Diagnose</a></li>
+                <li class="nav-item"><a class="nav-link" href="/diagnose">Diagnose</a></li>
                 <li class="nav-item"><a class="nav-link" href="/terms">Terms</a></li>
                 <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
             </ul>
@@ -267,5 +266,19 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Change navbar color on scroll
+        window.onscroll = function() {changeNavbarColor()};
+    
+        function changeNavbarColor() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 400) { // You can adjust the scroll position
+                navbar.style.backgroundColor = '#1E3D58'; // Change to your desired color
+            } else {
+                navbar.style.backgroundColor = '#52aeffd9'; // Default color
+            }
+        }
+    </script>
+    
 </body>
 </html>
