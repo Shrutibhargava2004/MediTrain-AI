@@ -5,11 +5,13 @@ from langchain.chains import RetrievalQA
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
 from dotenv import load_dotenv, find_dotenv
-from flask import Flask, render_template, request, jsonify, session
+from flask import Flask, render_template, request, jsonify, session, redirect, flash, url_for
 import numpy as np
 import pickle, joblib, re
 import pandas as pd
 from bs4 import BeautifulSoup
+from flask_sqlalchemy import SQLAlchemy
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 # Loading the .env file
@@ -70,21 +72,89 @@ qa_chain = RetrievalQA.from_chain_type(
 )
 # ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+# DATABASE 
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:Shruti%402004@localhost/MeditrainAI'  # Update password and DB name
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db = SQLAlchemy(app)
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    email = db.Column(db.String(100), unique=True, nullable=False)
+    password = db.Column(db.String(255), nullable=False)
+
+# Register Route
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        name = request.form['name']
+        email = request.form['email']
+        password = request.form['password']
+
+        # Check if email already exists
+        existing_user = User.query.filter_by(email=email).first()
+        if existing_user:
+            flash('Email is already registered. Please login.', 'error')
+            return redirect('/register')
+
+        # Hash the password
+        hashed_password = generate_password_hash(password)
+
+        # Add user to the database
+        new_user = User(name=name, email=email, password=hashed_password)
+        db.session.add(new_user)
+        db.session.commit()
+
+        flash('Registration successful! Please login.', 'success')
+        return redirect('/login')
+
+    return render_template('register.html')
+
+
+# Login Route
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        email = request.form.get('email')
+        password = request.form.get('password')
+        user = User.query.filter_by(email=email).first()
+
+        if user and check_password_hash(user.password, password):  # Assuming password is hashed
+            session['user_id'] = user.id  # Store user ID in the session
+            flash('Logged in successfully!', 'success')  # Send a success message to the template
+            return render_template('login.html', login_success=True)  # Pass a flag to trigger the alert
+        else:
+            return "Invalid credentials. Please try again.", 400
+
+    return render_template('login.html', login_success=False)  # Default behavior
+
+
+
+# Logout Route
+@app.route('/logout')
+def logout():
+    session.pop('user_id', None)
+    flash('You have been logged out.', 'info')
+    return redirect(url_for('login'))
+
+
+
+
+
+
+
+
+# ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 @app.route('/')
 def home():
     return render_template('home.html')
 
 @app.route('/chat')
 def chat():
+    if 'user_id' not in session:
+        flash('Please log in to access the chat.', 'warning')
+        return redirect(url_for('login'))
     return render_template('chat.html')
-
-@app.route('/login')
-def login():
-    return render_template('login.html')
-
-@app.route('/register')
-def register():
-    return render_template('register.html')
 
 @app.route('/terms')
 def terms():
@@ -145,7 +215,7 @@ def query():
     messages = split_response_by_newline(response_text)
 
     # Print the split messages for debugging
-    print("Messages after splitting:", messages)
+    # print("Messages after splitting:", messages)
 
     # Check if messages are being created
     if not messages:
@@ -192,7 +262,7 @@ def heart_predict():
     heartmodel = pickle.load(open('model/hdp_model.pkl', 'rb'))
     try:
         # Debug: Print received form data keys
-        print("Form keys received:", request.form.keys())
+        # print("Form keys received:", request.form.keys())
 
         # Collect form data
         age = int(request.form['age'])
@@ -251,11 +321,11 @@ def convert_to_one_hot(selected_category, all_categories, user_input):
     one_hot = [1 if category == selected_category else 0 for category in all_categories]
     user_input.extend(one_hot)
 alzheimer_model = joblib.load('model/alzheimer_model.pkl')
-# prediction function 
+
 def alzheimer_predict(input_data):
     predictions = alzheimer_model.predict(input_data)
     return predictions
-# Route to handle Alzheimer prediction requests
+
 @app.route('/alzheimer_predict', methods=['POST'])
 def alzheimer_disease_predict():
     # Extract data from the form
@@ -294,5 +364,18 @@ def alzheimer_disease_predict():
     # Return the template with the result
     return render_template('alzheimer.html', result=result)
 
+
+
+
+
+
+
+
+
+def init_db():
+    with app.app_context():
+        db.create_all()
+
 if __name__ == '__main__':
+    init_db()  # Initialize the database
     app.run(debug=True)

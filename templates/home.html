@@ -177,7 +177,11 @@
                 <li class="nav-item"><a class="nav-link" href="/chat">Chat</a></li>
                 <li class="nav-item"><a class="nav-link" href="/diagnose">Diagnose</a></li>
                 <li class="nav-item"><a class="nav-link" href="/terms">Terms</a></li>
-                <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+                {% if session.get('user_id') %}
+                    <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+                {% else %}
+                    <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+                {% endif %} 
             </ul>
         </div>
     </div>

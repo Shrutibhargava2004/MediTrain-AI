@@ -6,3 +6,5 @@ huggingface_hub
 flask
 sentence-transformers
 gunicorn
+flask-sqlalchemy
+mysql-connector-python
