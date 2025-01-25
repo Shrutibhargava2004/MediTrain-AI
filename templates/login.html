@@ -116,11 +116,22 @@
      <script>
         $(document).ready(function() {
             // Check if login was successful (backend sends 'login_success' flag)
-            {% if login_success %}
-                alert("Logged in successfully!");
-                // Redirect to the chat page after clicking OK
-                window.location.href = "/chat";
+            // {% if login_success %}
+            //     alert("Logged in successfully!");
+            //     // Redirect to the chat page after clicking OK
+            //     window.location.href = "/chat";
+            // {% endif %}
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    alert("{{ message }}");
+                    {% if category == 'success' %}
+                // Redirect to chat page after successful login
+                        window.location.href = "/chat";
+                    {% endif %}
+                {% endfor %}
             {% endif %}
+            {% endwith %}
         });
     </script>
 

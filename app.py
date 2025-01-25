@@ -90,13 +90,10 @@ def register():
         name = request.form['name']
         email = request.form['email']
         password = request.form['password']
-
-        # Check if email already exists
         existing_user = User.query.filter_by(email=email).first()
         if existing_user:
             flash('Email is already registered. Please login.', 'error')
             return redirect('/register')
-
         # Hash the password
         hashed_password = generate_password_hash(password)
 
@@ -109,8 +106,6 @@ def register():
         return redirect('/login')
 
     return render_template('register.html')
-
-
 # Login Route
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -118,17 +113,14 @@ def login():
         email = request.form.get('email')
         password = request.form.get('password')
         user = User.query.filter_by(email=email).first()
-
         if user and check_password_hash(user.password, password):  # Assuming password is hashed
             session['user_id'] = user.id  # Store user ID in the session
             flash('Logged in successfully!', 'success')  # Send a success message to the template
             return render_template('login.html', login_success=True)  # Pass a flag to trigger the alert
         else:
-            return "Invalid credentials. Please try again.", 400
-
+            flash('Invalid credentials. Please try again.', 'danger')  # Error message
+            return render_template('login.html', login_success=False)
     return render_template('login.html', login_success=False)  # Default behavior
-
-
 
 # Logout Route
 @app.route('/logout')
@@ -175,6 +167,7 @@ def heartdisease():
 @app.route('/alzheimer')
 def alzheimer():
     return render_template('alzheimer.html')
+
 # /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 def remove_html_tags(text):
@@ -231,31 +224,43 @@ def query():
     # Return the response in JSON format
     return jsonify({'messages': colored_messages})
 
-# Diabetes prediction
 @app.route('/predict', methods=['POST'])
 def predict():
-    # diabetes_classifier
-    diabetes_filename = 'model/voting_diabetes.pkl'
-    diabetes_classifier = pickle.load(open(diabetes_filename, 'rb'))
-    if request.method == 'POST':
-        glucose = int(request.form['glucose'])
-        bp = int(request.form['bloodpressure'])
-        st = int(request.form['skinthickness'])
-        insulin = int(request.form['insulin'])
-        bmi = float(request.form['bmi'])
-        dpf = float(request.form['dpf'])
-        age = int(request.form['age'])
-        
-        data = np.array([[glucose, bp, st, insulin, bmi, dpf, age]])
-        my_prediction = diabetes_classifier.predict(data)
+    try:
+        # Load the diabetes classifier model
+        diabetes_filename = 'model/voting_diabetes.pkl'
+        with open(diabetes_filename, 'rb') as model_file:
+            diabetes_classifier = pickle.load(model_file)
 
-        if my_prediction[0] == 0:
-            output = "No Diabetes"
-        else:
-            output = "Diabetes"
+        if request.method == 'POST':
+            # Get input values from the form
+            glucose = int(request.form.get('glucose', 0))
+            bp = int(request.form.get('bloodpressure', 0))
+            st = int(request.form.get('skinthickness', 0))
+            insulin = int(request.form.get('insulin', 0))
+            bmi = float(request.form.get('bmi', 0))
+            dpf = float(request.form.get('dpf', 0))
+            age = int(request.form.get('age', 0))
+            
+            # Prepare data for prediction
+            data = np.array([[glucose, bp, st, insulin, bmi, dpf, age]])
+            
+            # Make the prediction
+            my_prediction = diabetes_classifier.predict(data)
 
-        return render_template('diabetes.html', prediction_text="Result: {}".format(output))
+            # Interpret the prediction
+            if my_prediction[0] == 0:
+                output = "No Diabetes"
+            else:
+                output = "Diabetes"
 
+            # Render the template with the result
+            return render_template('diabetes.html', prediction_text="Result: {}".format(output))
+
+    except FileNotFoundError:
+        return "Model file not found. Please ensure 'voting_diabetes.pkl' is in the 'model/' directory.", 500
+    except Exception as e:
+        return f"An error occurred: {str(e)}", 500
 # heart disease
 @app.route('/heart_predict', methods=['POST'])
 def heart_predict():
