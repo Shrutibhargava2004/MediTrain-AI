@@ -13,6 +13,7 @@ from bs4 import BeautifulSoup
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
+from uuid import uuid4
 
 
 # Loading the .env file
@@ -174,12 +175,21 @@ def chat():
         flash('Please log in to access the chat.', 'warning')
         return redirect(url_for('login'))
     user_id = session.get('user_id')
+    if 'current_session_id' not in session:
+        session['current_session_id'] = str(uuid4())
     # Retrieve all unique session IDs for the user
     sessions = db.session.query(Conversation.session_id).filter_by(user_id=user_id).distinct().all()
     # Pass the session IDs to the template
     session_links = [session_id for session_id, in sessions]
-
     return render_template('chat.html', session_links=session_links)
+
+@app.route('/new_chat', methods=['POST'])
+def new_chat():
+    # Reset the session ID and chat history
+    session['current_session_id'] = str(uuid4())
+    session.pop('chat_history', None)  # Clear chat history
+    return jsonify({"success": True})
+
 
 @app.route('/terms')
 def terms():
@@ -226,9 +236,13 @@ def query():
     if not user_id:
         return jsonify({"error": "User not logged in."})
 
+    # Retrieve the current session ID or initialize a new one
+    if 'current_session_id' not in session:
+        session['current_session_id'] = str(uuid4())  # Use UUID for unique session IDs
+    session_id = session['current_session_id']
+
     # Retrieve the previous chat context from session
     context = session.get('chat_history', "")
-    session_id = str(datetime.utcnow().timestamp())  # Use timestamp as session ID
 
     # Add the new query to the chat history
     context += f"User: {user_query}\n"

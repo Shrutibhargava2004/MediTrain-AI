@@ -201,8 +201,8 @@
         <!-- Left Section for Conversation History -->
         <div class="history-section">
             <h2>Conversation History</h2>
+            <button id="new-chat-btn" class="btn btn-primary">New Chat</button>
             <div id="history-content">
-                <!-- History links will be inserted here -->
                 {% if session_links %}
                     <ul>
                         {% for session_id in session_links %}
@@ -229,6 +229,19 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        document.getElementById('new-chat-btn').addEventListener('click', function () {
+            fetch('/new_chat', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Clear the chat box and reload the page
+                        document.getElementById('chat-box').innerHTML = '<p>Start a new conversation!</p>';
+                        alert('New chat session started!');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        });
+
         function appendMessage(message, sender, bgColor) {
             const chatBox = document.getElementById('chat-box');
             const messageDiv = document.createElement('div');
