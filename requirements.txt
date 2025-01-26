@@ -8,3 +8,4 @@ sentence-transformers
 gunicorn
 flask-sqlalchemy
 mysql-connector-python
+scikit-learn==1.1.3

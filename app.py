@@ -12,6 +12,7 @@ import pandas as pd
 from bs4 import BeautifulSoup
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
+from datetime import datetime
 
 
 # Loading the .env file
@@ -83,6 +84,21 @@ class User(db.Model):
     email = db.Column(db.String(100), unique=True, nullable=False)
     password = db.Column(db.String(255), nullable=False)
 
+# Add Conversation table to store session history
+class Conversation(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    session_id = db.Column(db.String(255), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    person = db.Column(db.String(10), nullable=False)  # 'user' or 'bot'
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+    message = db.Column(db.Text, nullable=False)
+
+    user = db.relationship('User', backref=db.backref('conversations', lazy=True))
+
+    def __repr__(self):
+        return f"<Conversation {self.id}>"
+
+
 # Register Route
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -129,6 +145,17 @@ def logout():
     flash('You have been logged out.', 'info')
     return redirect(url_for('login'))
 
+@app.route('/chat_history/<session_id>')
+def chat_history(session_id):
+    user_id = session.get('user_id')
+    if not user_id:
+        flash('Please log in to view your chat history.', 'warning')
+        return redirect(url_for('login'))
+
+    # Retrieve messages for the selected session
+    conversation = db.session.query(Conversation).filter_by(session_id=session_id, user_id=user_id).order_by(Conversation.timestamp).all()
+
+    return render_template('chat_history.html', conversation=conversation)
 
 
 
@@ -146,7 +173,13 @@ def chat():
     if 'user_id' not in session:
         flash('Please log in to access the chat.', 'warning')
         return redirect(url_for('login'))
-    return render_template('chat.html')
+    user_id = session.get('user_id')
+    # Retrieve all unique session IDs for the user
+    sessions = db.session.query(Conversation.session_id).filter_by(user_id=user_id).distinct().all()
+    # Pass the session IDs to the template
+    session_links = [session_id for session_id, in sessions]
+
+    return render_template('chat.html', session_links=session_links)
 
 @app.route('/terms')
 def terms():
@@ -188,9 +221,14 @@ def split_response_by_newline(response_text):
 @app.route('/query', methods=['POST'])
 def query():
     user_query = request.form['query'].strip()
+    user_id = session.get('user_id')
+
+    if not user_id:
+        return jsonify({"error": "User not logged in."})
 
     # Retrieve the previous chat context from session
     context = session.get('chat_history', "")
+    session_id = str(datetime.utcnow().timestamp())  # Use timestamp as session ID
 
     # Add the new query to the chat history
     context += f"User: {user_query}\n"
@@ -198,8 +236,17 @@ def query():
     # Get the response from the QA chain
     response = qa_chain.invoke({'query': user_query, 'context': context})
 
+    # Store the user query in the database
+    user_message = Conversation(session_id=session_id, user_id=user_id, person='user', message=user_query)
+    db.session.add(user_message)
+
     # Update chat history in session
     session['chat_history'] = context + f"Bot: {response['result']}\n"
+
+    # Store the bot response in the database
+    bot_message = Conversation(session_id=session_id, user_id=user_id, person='bot', message=response['result'])
+    db.session.add(bot_message)
+    db.session.commit()
 
     # Process the response text
     response_text = response["result"]

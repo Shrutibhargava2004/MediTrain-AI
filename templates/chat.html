@@ -202,7 +202,16 @@
         <div class="history-section">
             <h2>Conversation History</h2>
             <div id="history-content">
-                <!-- History content will go here -->
+                <!-- History links will be inserted here -->
+                {% if session_links %}
+                    <ul>
+                        {% for session_id in session_links %}
+                            <li><a href="{{ url_for('chat_history', session_id=session_id) }}">Session {{ session_id }}</a></li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>No conversation history available.</p>
+                {% endif %}
             </div>
         </div>
 
