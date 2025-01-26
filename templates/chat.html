@@ -54,13 +54,13 @@
         }
 
         .history-section {
-            width: 30%; /* Left section for conversation history */
-            background-color: #78787867;
+            width: 23%; /* Left section for conversation history */
+            background-color: #ebcefc44;
             border-radius: 10px;
             padding: 20px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             margin-right: 20px;
-            max-height: 100vh; /* Adjust height according to available space */
+            max-height: 100%; /* Adjust height according to available space */
             overflow-y: auto;
         }
 
@@ -168,6 +168,50 @@
         b {
             font-weight: bold;
         }
+        #history-content ul {
+            padding: 0;
+            margin: 0;
+            list-style-type: none;
+        }
+
+        #history-content li {
+            margin-bottom: 10px;
+        }
+
+        #history-content a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #204566;
+            color: #fce6eb;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        #history-content a:hover {
+            color: #1E3D58;
+            background-color: #73a6c6d7;
+        }
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .history-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        .new-chat-icon {
+            width: 35px; /* Adjust size as needed */
+            height: auto;
+            cursor: pointer;
+        }
+
     </style>
 </head>
 <body>
@@ -200,14 +244,17 @@
     <div class="main-container">
         <!-- Left Section for Conversation History -->
         <div class="history-section">
-            <h2>Conversation History</h2>
-            <button id="new-chat-btn" class="btn btn-primary">New Chat</button>
+            <div class="history-header">
+                <h4>History</h4>
+                <img src="/static/new-chat.png" alt="New Chat" id="new-chat-btn" class="new-chat-icon">
+            </div>
             <div id="history-content">
                 {% if session_links %}
                     <ul>
                         {% for session_id in session_links %}
-                            <li><a href="{{ url_for('chat_history', session_id=session_id) }}">Session {{ session_id }}</a></li>
+                            <li><a href="{{ url_for('chat_history', session_id=session_id) }}">Session {{ loop.index }}</a></li>
                         {% endfor %}
+
                     </ul>
                 {% else %}
                     <p>No conversation history available.</p>

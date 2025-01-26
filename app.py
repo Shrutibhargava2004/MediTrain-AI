@@ -156,7 +156,7 @@ def chat_history(session_id):
     # Retrieve messages for the selected session
     conversation = db.session.query(Conversation).filter_by(session_id=session_id, user_id=user_id).order_by(Conversation.timestamp).all()
 
-    return render_template('chat_history.html', conversation=conversation)
+    return render_template('chat_history.html', conversation=conversation, session_id = session_id)
 
 
 

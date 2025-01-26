@@ -4,20 +4,114 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat History</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: rgb(245,251,255);
+            background: linear-gradient(90deg, rgba(245,251,255,1) 0%, rgba(174,219,255,1) 67%, rgba(234,245,254,1) 95%);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 800px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            color: #333;
+        }
+
+        .conversation {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+
+        .conversation div {
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .conversation div:nth-child(even) {
+            background-color: #e6f7ff; /* Bot message */
+        }
+
+        .conversation div:nth-child(odd) {
+            background-color: #f9f9f9; /* User message */
+        }
+
+        .conversation strong {
+            color: #1E3D58;
+        }
+
+        .back-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            color: #fff;
+            background-color: #02274e;
+            border-radius: 5px;
+            text-decoration: none;
+            text-align: center;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-btn:hover {
+            color: #02274e;
+            background-color: #ffacaccc;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #888;
+        }
+    </style>
 </head>
 <body>
-    <h1>Conversation History - Session {{ session_id }}</h1>
+    <div class="container">
+        <div class="header">
+            <h5>Conversation History - Session {{ session_id }}</h5>
+        </div>
 
-    <div class="conversation">
-        {% if conversation %}
-            {% for message in conversation %}
-                <div><strong>{{ message.person.capitalize() }}:</strong> {{ message.message }}</div>
-            {% endfor %}
-        {% else %}
-            <p>No messages found for this session.</p>
-        {% endif %}
+        <div class="conversation">
+            {% if conversation %}
+                {% for message in conversation %}
+                    <div>
+                        <strong>{{ message.person.capitalize() }}:</strong> {{ message.message }}
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No messages found for this session.</p>
+            {% endif %}
+        </div>
+
+        <a href="{{ url_for('chat') }}" class="back-btn">Back to Chat</a>
     </div>
 
-    <a href="{{ url_for('chat') }}">Back to chat</a>
+    <footer>
+        &copy; 2025 MediTrain AI
+    </footer>
 </body>
 </html>
