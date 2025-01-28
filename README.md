@@ -6,7 +6,7 @@ MediTrain is an AI-powered medical assistant designed to provide users with accu
 
 ## Features
 
-* **Conversational Context**: Retains the context of recent interactions to provide relevant and cohesive responses.
+* **Store Conversation History**: Stores the conversations of every session for future use.
 * **Medical Focus**: Tailored to assist with general medical questions while avoiding direct diagnoses.
 * **Flask-Based UI**: Intuitive and interactive web-based interface for seamless user interaction.
 * **Empathetic Responses**: Ensures responses are clear, considerate, and accurate.
@@ -45,8 +45,10 @@ To run MediTrain locally, ensure you have the following:
    python app.py
    ```
 2. Open the application in your browser (default: [http://localhost:5000](http://localhost:5000/)).
-3. Interact with MediTrain by typing your medical queries in the input box.
-4. Use the text-to-speech button to listen to the chatbot's responses.
+3. Create an account and login to the account to access chat.
+4. Interact with MediTrain by typing your medical queries in the input box.
+5. Use the text-to-speech button to listen to the chatbot's responses.
+6. Predict diseases like diabeties, Alzheimer's Disease and Heart disease.
 
 ## Project Structure
 
@@ -55,6 +57,8 @@ To run MediTrain locally, ensure you have the following:
 * **`requirements.txt`**: List of required Python packages.
 * **`static/`**: Contains static assets like CSS and JavaScript files.
 * **`templates/`**: HTML templates for the Flask application.
+* **`model/`**: Trained models for various disease prediction.
+* **`sample/`**: Contains the code for text preprocessing and storing data.
 
 ## Key Libraries
 
