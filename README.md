@@ -6,11 +6,13 @@ MediTrain is an AI-powered medical assistant designed to provide users with accu
 
 ## Features
 
+* **Simulated Patient for Trainee Doctors**: Interacts as a virtual patient, describing symptoms and responding dynamically to follow-up questions from users acting as doctors.
 * **Store Conversation History**: Stores the conversations of every session for future use.
 * **Medical Focus**: Tailored to assist with general medical questions while avoiding direct diagnoses.
 * **Flask-Based UI**: Intuitive and interactive web-based interface for seamless user interaction.
 * **Empathetic Responses**: Ensures responses are clear, considerate, and accurate.
 * **Text-to-Speech Functionality**: Allows users to listen to chatbot responses for a more accessible experience.
+* **Disease Prediction**: Supports prediction of diseases like diabetes, Alzheimer's disease, and heart disease.
 
 ## Prerequisites
 
@@ -45,10 +47,11 @@ To run MediTrain locally, ensure you have the following:
    python app.py
    ```
 2. Open the application in your browser (default: [http://localhost:5000](http://localhost:5000/)).
-3. Create an account and login to the account to access chat.
-4. Interact with MediTrain by typing your medical queries in the input box.
-5. Use the text-to-speech button to listen to the chatbot's responses.
-6. Predict diseases like diabeties, Alzheimer's Disease and Heart disease.
+3. Create an account and log in to access the chat.
+4. Choose between:
+   - **General Medical Chatbot**: Ask medical queries.
+   - **Simulated Patient Mode**: Act as a virtual patient.
+5. Use the text-to-speech button to listen to chatbot responses.
 
 ## Project Structure
 
@@ -57,7 +60,7 @@ To run MediTrain locally, ensure you have the following:
 * **`requirements.txt`**: List of required Python packages.
 * **`static/`**: Contains static assets like CSS and JavaScript files.
 * **`templates/`**: HTML templates for the Flask application.
-* **`model/`**: Trained models for various disease prediction.
+* **`model/`**: Trained models for various disease predictions.
 * **`sample/`**: Contains the code for text preprocessing and storing data.
 
 ## Key Libraries
@@ -66,11 +69,14 @@ To run MediTrain locally, ensure you have the following:
 * **PyPDF2**: For extracting data from the medical book in PDF format.
 * **NLTK**: For natural language processing.
 * **gTTS**: For text-to-speech functionality.
+* **Mistral-7B-Instruct-v0.3**: For generating response in medical queries asked by patient.
+* **LLaMA API from Groq**: For generating responses in simulated patient mode.
 * **Python-dotenv**: For managing environment variables.
 
 ## Important Notes
 
 * MediTrain is designed as a medical assistant but does not provide medical diagnoses or treatment plans.
+* The simulated patient feature is meant for educational purposes and should not replace real patient interactions.
 * Always consult a certified healthcare professional for medical concerns.
 
 ## Future Enhancements
@@ -79,6 +85,7 @@ To run MediTrain locally, ensure you have the following:
 * Enhance conversation memory to retain context over extended sessions.
 * Introduce additional models for region-specific medical advice.
 * Implement real-time voice-based interaction.
+* Expand the simulated patient feature to include different case complexities and medical histories.
 
 ## License
 
@@ -87,4 +94,3 @@ This project is licensed under the MIT License.
 ---
 
 Enjoy using MediTrain and let us know if you have suggestions or encounter issues!
-
