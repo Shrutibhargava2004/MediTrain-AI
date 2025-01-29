@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediTrain - Simulated Patient Chat</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .chat-box {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+        .chat-message {
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        .user-message {
+            background-color: #f1f1f1;
+            text-align: left;
+        }
+        .assistant-message {
+            background-color: #d1f7d3;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1 class="my-4">💊 MediTrain - Your Medical Assistant</h1>
+    <p>
+        MediTrain is here to simulate realistic patient interactions. Please note that this is for training purposes only. Always consult a healthcare professional for proper diagnosis and treatment.
+    </p>
+
+    <!-- Chat History -->
+    <div class="chat-box">
+        {% for message in chat_history %}
+            <div class="chat-message {% if message.role == 'user' %}user-message{% else %}assistant-message{% endif %}">
+                <strong>{{ message.role | capitalize }}:</strong> {{ message.content }}
+            </div>
+        {% endfor %}
+    </div>
+
+    <!-- User Input -->
+    <form method="POST" action="/patient">
+        <div class="form-group">
+            <label for="user_input">Describe your symptoms or ask a question:</label>
+            <input type="text" id="user_input" name="user_input" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Send</button>
+    </form>
+</div>
+
+</body>
+</html>

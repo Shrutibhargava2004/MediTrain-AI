@@ -191,6 +191,10 @@ def new_chat():
     return jsonify({"success": True})
 
 
+@app.route('/patient')
+def patient():
+    return render_template('patient.html')
+
 @app.route('/terms')
 def terms():
     return render_template('terms.html')
