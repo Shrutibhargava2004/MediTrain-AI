@@ -26,54 +26,50 @@ app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
 # Load environment variables
-HF_TOKEN = os.environ.get("HF_TOKEN")
-HUGGINGFACE_REPO_ID = "mistralai/Mistral-7B-Instruct-v0.3"
+load_dotenv(find_dotenv())
+GROQ_API_KEY = os.environ.get("GROQ_API_KEY")
+# Load Groq's Mistral model
+llm = ChatGroq(api_key=GROQ_API_KEY, model_name="mixtral-8x7b-32768")
 
-# Load LLM
-def load_llm(huggingface_repo_id):
-    llm = HuggingFaceEndpoint(
-        repo_id=huggingface_repo_id,
-        temperature=0.5,
-        model_kwargs={"token": HF_TOKEN, "max_length": "512"}
-    )
-    return llm
 
 # Custom prompt template for reduced word responses
 CUSTOM_PROMPT_TEMPLATE = """
-If the user greets you (e.g., "hello", "hi doctor"), respond with a friendly greeting and let them know you're ready to assist with their medical queries. Do start talking about any disease on your own.
+You are Meditrain AI, an AI powered doctor. you are here to solve the users medical related queries. 
+If the user greets you (e.g., "hello", "hi doctor"), respond with a warm and professional greeting. Let them know you're here to assist with any medical concerns. Do not start discussing any disease on your own unless the user asks.
+If a follow-up question is required, ask relevant questions before diagnosing.
 
-Otherwise, if the user asks about a disease, provide a concise and summarized answer. Break your answer into:
+otherwise, if the user inquires about a medical condition, provide a well-structured yet concise response, breaking it down into the following sections:
 
-1. <b>Overview</b>: A brief description of the disease.
-2. <b>Key Symptoms</b>: Mention only the most critical symptoms.
-3. <b>Short Treatment</b>: Offer concise recommendations or treatments.
-4. <b>Medicines</b>: Mention 1-2 commonly used medicines or treatments.
+1. **Overview**: Briefly explain what the disease is, including its primary cause.
+2. **Key Symptoms**: List only the most critical and distinguishing symptoms.
+3. **Possible Treatments**: Provide a concise summary of available treatments, including lifestyle changes if applicable.
+4. **Common Medications**: Mention 1-2 commonly prescribed medicines or treatment options.
 
-Keep the response concise, clear, and supportive.
+Ensure that your response is clear, informative, and easy to understand. Use simple language while maintaining medical accuracy. If necessary, acknowledge that consulting a healthcare professional is always advisable for proper diagnosis and treatment.
 
-Context: {context}
-Question: {question}
+Context: {context}  
+Question: {question}  
 
-Ensure brevity in your responses without losing clarity. 
+Keep your response concise and focused while ensuring clarity and accuracy.
+
 """
 
-def set_custom_prompt(custom_prompt_template):
-    prompt = PromptTemplate(template=custom_prompt_template, input_variables=["context", "question"])
-    return prompt
+prompt = PromptTemplate(template=CUSTOM_PROMPT_TEMPLATE, input_variables=["context", "question"])
 
 # Load the dataset
 DB_FAISS_PATH = "vectorstore/db_faiss"
 embedding_model = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
-db = FAISS.load_local(DB_FAISS_PATH, embedding_model, allow_dangerous_deserialization=True)
+retriever = FAISS.load_local(DB_FAISS_PATH, embedding_model, allow_dangerous_deserialization=True).as_retriever(search_kwargs={'k': 3})
 
 # Create QA chain
 qa_chain = RetrievalQA.from_chain_type(
-    llm=load_llm(HUGGINGFACE_REPO_ID),
+    llm=llm,
     chain_type="stuff",
-    retriever=db.as_retriever(search_kwargs={'k': 3}),
-    return_source_documents=True,  # This will be handled below
-    chain_type_kwargs={'prompt': set_custom_prompt(CUSTOM_PROMPT_TEMPLATE)}
+    retriever=retriever,
+    return_source_documents=True,
+    chain_type_kwargs={'prompt': prompt}
 )
+
 # ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 # DATABASE 
@@ -176,14 +172,18 @@ def chat():
     if 'user_id' not in session:
         flash('Please log in to access the chat.', 'warning')
         return redirect(url_for('login'))
-    user_id = session.get('user_id')
+    
+    user_id = session['user_id']
+    
     if 'current_session_id' not in session:
         session['current_session_id'] = str(uuid4())
+    
     # Retrieve all unique session IDs for the user
     sessions = db.session.query(Conversation.session_id).filter_by(user_id=user_id).distinct().all()
-    # Pass the session IDs to the template
+    
     session_links = [session_id for session_id, in sessions]
     return render_template('chat.html', session_links=session_links)
+
 
 @app.route('/new_chat', methods=['POST'])
 def new_chat():
@@ -242,12 +242,12 @@ def query():
     if not user_id:
         return jsonify({"error": "User not logged in."})
 
-    # Retrieve the current session ID or initialize a new one
     if 'current_session_id' not in session:
-        session['current_session_id'] = str(uuid4())  # Use UUID for unique session IDs
+        session['current_session_id'] = str(uuid4())
+
     session_id = session['current_session_id']
 
-    # Retrieve the previous chat context from session
+    # Retrieve the previous chat context
     context = session.get('chat_history', "")
 
     # Add the new query to the chat history
@@ -256,39 +256,26 @@ def query():
     # Get the response from the QA chain
     response = qa_chain.invoke({'query': user_query, 'context': context})
 
-    # Store the user query in the database
+    # Store user query
     user_message = Conversation(session_id=session_id, user_id=user_id, person='user', message=user_query)
     db.session.add(user_message)
 
-    # Update chat history in session
+    # Update chat history
     session['chat_history'] = context + f"Bot: {response['result']}\n"
 
-    # Store the bot response in the database
+    # Store bot response
     bot_message = Conversation(session_id=session_id, user_id=user_id, person='bot', message=response['result'])
     db.session.add(bot_message)
     db.session.commit()
 
-    # Process the response text
+    # Process response
     response_text = response["result"]
-
-    # Split the response based on new lines into a list of messages
     messages = split_response_by_newline(response_text)
 
-    # Print the split messages for debugging
-    # print("Messages after splitting:", messages)
-
-    # Check if messages are being created
-    if not messages:
-        print("No messages to return.")
-
     # Assign pastel colors to each part of the message
-    pastel_colors = [
-        "#FFCCCB", "#D9F9D9", "#FFFACD", "#FFDAB9", "#D1C4E9",
-        "#FFECB3", "#F8BBD0", "#E6EE9C", "#C8E6C9", "#BBDEFB", "#F5E0B7"
-    ]
+    pastel_colors = ["#FFCCCB", "#D9F9D9", "#FFFACD", "#FFDAB9", "#D1C4E9", "#FFECB3", "#F8BBD0", "#E6EE9C", "#C8E6C9", "#BBDEFB", "#F5E0B7"]
     colored_messages = [{"text": msg, "bg_color": pastel_colors[i % len(pastel_colors)]} for i, msg in enumerate(messages)]
 
-    # Return the response in JSON format
     return jsonify({'messages': colored_messages})
 
 @app.route('/predict', methods=['POST'])
@@ -328,6 +315,7 @@ def predict():
         return "Model file not found. Please ensure 'voting_diabetes.pkl' is in the 'model/' directory.", 500
     except Exception as e:
         return f"An error occurred: {str(e)}", 500
+
 # heart disease
 @app.route('/heart_predict', methods=['POST'])
 def heart_predict():
@@ -520,10 +508,9 @@ def initialize_chat_history():
 
 def append_to_chat_history(role, content):
     """Append a message to the chat history."""
-    if "chat_history" not in session:
-        session["chat_history"] = []  # Initialize as an empty list if not already set
-    
-    # Append the new message to chat history
+    if not isinstance(session.get("chat_history"), list):
+        session["chat_history"] = []  # Reset as an empty list if it's not already a list
+        # Append the new message to chat history
     session["chat_history"].append({"role": role, "content": content})
     
     session.modified = True

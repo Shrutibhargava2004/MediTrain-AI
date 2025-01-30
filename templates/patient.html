@@ -24,7 +24,8 @@
             padding-top: 10px;
             color: #6c757d;
             font-size: 0.9rem;
-            width: 64%;
+            width: 100%;
+            text-align: center;
         }
         a {
             text-decoration: none;
@@ -34,7 +35,6 @@
             text-decoration: underline;
         }
 
-        /* Navbar Styling */
         /* Navbar Styling */
         .navbar {
             background-color: #1E3D58;
@@ -46,13 +46,12 @@
             color: #fff;
         }
 
-        .nav-link {
-            color: #fff !important;
-            font-weight: 500;
-        }
-
         .nav-link:hover {
-            color: #F9C8D3 !important;
+            background-color: rgba(255, 255, 255, 0.295); /* Light bubble effect */
+            border-radius: 4px;
+        }
+        .navbar-dark .navbar-nav .nav-link {
+            color: rgb(255, 255, 255);
         }
 
         /* Chatbox Styling */
@@ -74,7 +73,7 @@
         }
         .assistant-message {
             background-color: #d1f7d3;
-            text-align: right;
+            text-align: left;
         }
 
         /* Form Styling */
@@ -114,8 +113,8 @@
 
     <div class="container my-5">
         <p class="description">
-            MediTrain is here to simulate realistic patient interactions. Please note that this is for training purposes only. Always consult a healthcare professional for proper diagnosis and treatment.
-            <p>Strat with a message : "play a role of patient"</p>
+            MediTrain is here to simulate realistic patient interactions.<br>Please note that this is for training purposes only. Always consult a healthcare professional for proper diagnosis and treatment.
+            <br>Strat with a message : "play a role of patient"
         </p>
 
         <!-- Chat History -->

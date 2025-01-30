@@ -30,13 +30,12 @@
             color: #fff;
         }
 
-        .nav-link {
-            color: #fff !important;
-            font-weight: 500;
-        }
-
         .nav-link:hover {
-            color: #F9C8D3 !important;
+            background-color: rgba(255, 255, 255, 0.295); /* Light bubble effect */
+            border-radius: 4px;
+        }
+        .navbar-dark .navbar-nav .nav-link {
+            color: rgb(255, 255, 255);
         }
 
         .form-container {
@@ -81,6 +80,7 @@
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="/chat">Chat</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/patient">Simulated Patient</a></li>
                     <li class="nav-item"><a class="nav-link" href="/diagnose">Diagnose</a></li>
                     <li class="nav-item"><a class="nav-link" href="/terms">Terms</a></li>
                     {% if session.get('user_id') %}
