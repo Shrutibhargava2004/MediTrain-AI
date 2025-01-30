@@ -507,13 +507,7 @@ system_prompt_patient = ( """
 
     Trainee: Any other symptoms?
     Patient (Simulated): I felt nauseous earlier and had a slight fever last night.
-
-    AI Instructor (Optional): The trainee should explore differential diagnoses like appendicitis or other causes of acute abdominal pain. Encourage asking about bowel movements, recent dietary changes, and medical history.
-
-    Instructor Wrap-Up: “This case emphasizes the importance of narrowing down acute abdominal pain causes through focused history-taking and physical exam findings.”
-
-
-    """
+ """
 )
 
 # Initialize Groq client

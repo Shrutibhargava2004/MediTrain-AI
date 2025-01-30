@@ -93,7 +93,7 @@
             margin: 0.5rem;
         }
 
-        #mission, #vision, #values {
+        #mission, #vision, #values, #about-meditrain{
             background: rgb(245,251,255);
             background: linear-gradient(90deg, rgba(245,251,255,1) 0%, rgba(174,219,255,1) 67%, rgba(234,245,254,1) 95%);
             padding: 1rem 3rem;
@@ -120,7 +120,7 @@
             background-color: #f6e5ff;
         }
         #mission .bubble {
-            background-color: #e7e1ff; /* Light pastel blue */
+            background-color: #ccc1ff62; /* Light pastel blue */
         }
 
         #vision .bubble {
@@ -148,7 +148,7 @@
             background-color: #1E3D58;
             color: #fff;
             padding: 2rem 0;
-            
+            padding-top: 3%;
         }
 
         footer a {
@@ -191,6 +191,7 @@
 
     <!-- Landing Page Content -->
     <div class="container-fluid p-0">
+
         <!-- Section 1: AI Doctor -->
         <section id="ai-doctor">
             <div>
@@ -199,9 +200,6 @@
             </div>
             <img src="/static/doctor.png" alt="AI Doctor">
         </section>
-
-        <!-- 'Know About Us' Heading -->
-        
 
         <!-- Section 2: Mission -->
         <section id="mission">
@@ -243,27 +241,78 @@
                     </div>
                 </div>
             </div>
+            <hr style="font-weight:900; margin-top: 3%;">
         </section>
+
+        <!-- Section: What is MediTrain AI? -->
+        <section id="about-meditrain" style="padding-bottom: 5%;">
+            <div class="container">
+                <h1 class="text-center" style="color: #1E3D58; font-weight: bold; line-height: 4rem;">What is MediTrain AI?</h1>
+                <p class="text-center description mx-auto">MediTrain AI is an innovative healthcare assistant designed to simulate real-life patient interactions and provide AI-powered diagnostic support. It enables users, especially medical professionals and students, to practice their diagnostic skills with an intelligent chatbot acting as a simulated patient.</p>
+                
+                <!-- Features, Working, and Benefits -->
+                <div class="row mt-5">
+                    <!-- Key Features -->
+                    <div class="col-md-4 d-flex justify-content-start">
+                        <div class="bubble" style="background-color: #f385af41; max-width: 100%;">
+                            <div class="bubble-content">
+                                <h4 class="text-center" style="color: #1E3D58;">Key Features</h4>
+                                <ul style="padding-left: 1rem;">
+                                    <li>Simulated Patient Conversations</li>
+                                    <li>AI-driven Diagnostic Assistance</li>
+                                    <li>Medical Condition Analysis</li>
+                                    <li>Session-based Conversation History</li>
+                                    <li>Interactive Chat for Real-time Learning</li>
+                                </ul>
+                            </div>
+                            <!-- <img src="/static/features.png" alt="Features" height="120"> -->
+                        </div>
+                    </div>
+
+                    <!-- How It Works -->
+                    <div class="col-md-4 d-flex justify-content-center">
+                        <div class="bubble" style="background-color: #ada9a967; max-width: 100%;">
+                            <div class="bubble-content">
+                                <h4 class="text-center" style="color: #1E3D58;">How Does It Work?</h4>
+                                <ul style="padding-left: 1rem;">
+                                    <li>The AI presents itself as a patient with symptoms.</li>
+                                    <li>Users (acting as doctors) ask follow-up questions.</li>
+                                    <li>The AI responds based on medical data and logic.</li>
+                                    <li>The user suggests a diagnosis and possible treatment.</li>
+                                    <li>The AI acknowledges and concludes the session.</li>
+                                </ul>
+                            </div>
+                            <!-- <img src="/static/howitworks.png" alt="How It Works" height="120"> -->
+                        </div>
+                    </div>
+
+                    <!-- Why Use MediTrain AI? -->
+                    <div class="col-md-4 d-flex justify-content-end">
+                        <div class="bubble" style="background-color: #f8ffdea4; max-width: 100%;">
+                            <div class="bubble-content">
+                                <h4 class="text-center" style="color: #1E3D58;">Why Use MediTrain AI?</h4>
+                                <ul style="padding-left: 1rem;">
+                                    <li>Enhance Medical Learning and Diagnostic Skills</li>
+                                    <li>Realistic, AI-powered Simulated Patient Scenarios</li>
+                                    <li>Safe and Interactive Training for Medical Students</li>
+                                    <li>Supports Decision-Making in Healthcare</li>
+                                    <li>Instant Feedback for Medical Professionals</li>
+                                </ul>
+                            </div>
+                            <!-- <img src="/static/whyuse.png" alt="Why Use" height="120"> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </div>
+
 
     <!-- Footer -->
     <footer class="text-center py-4 bg-dark text-white">
         <div class="container">
             <p class="mb-0">MediTrain AI was founded on the belief that technology can transform healthcare and provide accessible solutions to all. Our mission is to empower individuals by offering reliable, AI-driven healthcare insights and support, anytime and anywhere.</p>
-            <div class="mt-3">
-                <a href="#" class="text-white me-3" title="Facebook">
-                    <i class="fab fa-facebook-f"></i>
-                </a>
-                <a href="#" class="text-white me-3" title="Twitter">
-                    <i class="fab fa-twitter"></i>
-                </a>
-                <a href="#" class="text-white me-3" title="LinkedIn">
-                    <i class="fab fa-linkedin-in"></i>
-                </a>
-                <a href="#" class="text-white" title="Instagram">
-                    <i class="fab fa-instagram"></i>
-                </a>
-            </div>
             <p class="mt-4 mb-0">&copy; 2025 MediTrain AI. All rights reserved.</p>
         </div>
     </footer>
@@ -287,3 +336,103 @@
     
 </body>
 </html>
+
+
+
+
+<!-- # MediTrain - Medical Chatbot
+
+## Overview
+
+MediTrain is an AI-powered medical assistant designed to provide users with accurate, empathetic, and clear answers to medical queries. Built using open-source AI models and Flask, MediTrain emphasizes user-friendly interactions while ensuring that users are reminded to seek professional healthcare advice for proper diagnosis and treatment.
+
+## Features
+
+* **Simulated Patient for Trainee Doctors**: Interacts as a virtual patient, describing symptoms and responding dynamically to follow-up questions from users acting as doctors.
+* **Store Conversation History**: Stores the conversations of every session for future use.
+* **Medical Focus**: Tailored to assist with general medical questions while avoiding direct diagnoses.
+* **Flask-Based UI**: Intuitive and interactive web-based interface for seamless user interaction.
+* **Empathetic Responses**: Ensures responses are clear, considerate, and accurate.
+* **Text-to-Speech Functionality**: Allows users to listen to chatbot responses for a more accessible experience.
+* **Disease Prediction**: Supports prediction of diseases like diabetes, Alzheimer's disease, and heart disease.
+
+## Prerequisites
+
+To run MediTrain locally, ensure you have the following:
+
+* Python 3.8+
+* Libraries specified in `requirements.txt`
+* A medical book in PDF format (used for chatbot training)
+
+## Installation
+
+1. Clone this repository:
+   ```bash
+   git clone https://github.com/Shrutibhargava2004/MediTrain-AI.git
+   cd MediTrain-AI
+   ```
+2. Create a virtual environment and activate it:
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
+3. Install the dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+4. Place your `medical_book.pdf` and any related data files (e.g., JSON) in the `data` folder.
+
+## Usage
+
+1. Run the Flask application:
+   ```bash
+   python app.py
+   ```
+2. Open the application in your browser (default: [http://localhost:5000](http://localhost:5000/)).
+3. Create an account and log in to access the chat.
+4. Choose between:
+   - **General Medical Chatbot**: Ask medical queries.
+   - **Simulated Patient Mode**: Act as a virtual patient.
+5. Use the text-to-speech button to listen to chatbot responses.
+
+## Project Structure
+
+* **`app.py`**: Main Flask application script.
+* **`data/`**: Contains training data, including `medical_book.pdf` and JSON files.
+* **`requirements.txt`**: List of required Python packages.
+* **`static/`**: Contains static assets like CSS and JavaScript files.
+* **`templates/`**: HTML templates for the Flask application.
+* **`model/`**: Trained models for various disease predictions.
+* **`sample/`**: Contains the code for text preprocessing and storing data.
+
+## Key Libraries
+
+* **Flask**: For building the user interface.
+* **PyPDF2**: For extracting data from the medical book in PDF format.
+* **NLTK**: For natural language processing.
+* **gTTS**: For text-to-speech functionality.
+* **Mistral-7B-Instruct-v0.3**: For generating response in medical queries asked by patient.
+* **LLaMA API from Groq**: For generating responses in simulated patient mode.
+* **Python-dotenv**: For managing environment variables.
+
+## Important Notes
+
+* MediTrain is designed as a medical assistant but does not provide medical diagnoses or treatment plans.
+* The simulated patient feature is meant for educational purposes and should not replace real patient interactions.
+* Always consult a certified healthcare professional for medical concerns.
+
+## Future Enhancements
+
+* Add support for multilingual queries.
+* Enhance conversation memory to retain context over extended sessions.
+* Introduce additional models for region-specific medical advice.
+* Implement real-time voice-based interaction.
+* Expand the simulated patient feature to include different case complexities and medical histories.
+
+## License
+
+This project is licensed under the MIT License.
+
+---
+
+Enjoy using MediTrain and let us know if you have suggestions or encounter issues! -->
