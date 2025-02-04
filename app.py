@@ -17,10 +17,6 @@ from uuid import uuid4
 from langchain_groq import ChatGroq
 from langchain_core.messages import SystemMessage
 
-
-# Loading the .env file
-load_dotenv(find_dotenv())
-
 # Setup Flask app
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
@@ -286,7 +282,7 @@ def query():
 def predict():
     try:
         # Load the diabetes classifier model
-        diabetes_filename = 'model/voting_diabetes.pkl'
+        diabetes_filename = 'model/diabetes.pkl'
         with open(diabetes_filename, 'rb') as model_file:
             diabetes_classifier = pickle.load(model_file)
 
@@ -436,11 +432,9 @@ def alzheimer_disease_predict():
 
 
 
+# simulated patient
 
-
-# Load environment variables for API Key and model
-groq_api_key = os.getenv("GROQ_API_KEY")
-model = "mixtral-8x7b-32768"  # Replace with the appropriate model for your case
+model = "mixtral-8x7b-32768" 
 
 # System prompt to provide the context for the assistant
 system_prompt_patient = ( """
@@ -503,7 +497,7 @@ system_prompt_patient = ( """
 )
 
 # Initialize Groq client
-client = ChatGroq(groq_api_key=groq_api_key, model_name=model)
+client = ChatGroq(groq_api_key=GROQ_API_KEY, model_name=model)
 
 def initialize_chat_history():
     """Initialize chat history in session state."""
